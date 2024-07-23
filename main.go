@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
+	"test/models"
 
 	"github.com/gofiber/fiber"
 	"github.com/joho/godotenv"
@@ -64,7 +66,7 @@ func (r *Repository) SetupRoutes(app *fiber.App) {
 	api := app.Group("/api")
 	api.Post("/create_books", r.CreateBook)
 	api.Delete("delete_book/:id", r.deleteBook)
-	api.Get("/get_books/:id", r.GetBooks)
+	api.Get("/get_books/:id", r.GetBooks())
 	api.Get("/books", r.GetBooks)
 
 }
@@ -73,6 +75,15 @@ func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	config := &storage.Config{
+		Host:os.Getenv("DB_HOST"),
+		Port: os.Getenv("DB_PORT"),
+		Password: os.Getenv("DB_PASS"),
+		User: os.Getenv("DB_USER"),
+		DBName: os.Getenv("DB_NAME"),
+		SSLMode:os.Getenv("DB_SSLMODE")
 	}
 
 	db, err := storage.NewConnection(config)
