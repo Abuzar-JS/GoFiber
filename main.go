@@ -27,7 +27,7 @@ type Repository struct {
 func (r *Repository) CreateBook(context *fiber.Ctx) error {
 	book := Book{}
 
-	err := context.BodyParser(book)
+	err := context.BodyParser(&book)
 	if err != nil {
 		context.Status(http.StatusUnprocessableEntity).JSON(
 			&fiber.Map{"message": "request failed"})
@@ -100,6 +100,7 @@ func (r *Repository) GetBookByID(context *fiber.Ctx) error {
 		})
 		return nil
 	}
+
 	fmt.Println("The ID is", id)
 	err := r.DB.Where("id = ?", id).First(bookModel).Error
 	if err != nil {
