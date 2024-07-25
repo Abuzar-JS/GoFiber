@@ -48,6 +48,7 @@ func (r *Repository) CreateBook(context *fiber.Ctx) error {
 
 }
 
+// Function to get all books
 func (r *Repository) GetBooks(context *fiber.Ctx) error {
 	bookModels := &[]models.Books{}
 
