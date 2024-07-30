@@ -59,7 +59,7 @@ func (r *Repository) GetBooks(context *fiber.Ctx) error {
 		return err
 	}
 	context.Status(http.StatusOK).JSON(&fiber.Map{
-		"message": "Books fetched succcessfully",
+		"message": "Books fetched successfully",
 		"data":    bookModels,
 	})
 	return nil
@@ -140,7 +140,7 @@ func main() {
 		DBName:   os.Getenv("DB_NAME"),
 		SSLMode:  os.Getenv("DB_SSLMODE"),
 	}
-
+	// err
 	db, err := store.NewConnection(config)
 
 	if err != nil {
